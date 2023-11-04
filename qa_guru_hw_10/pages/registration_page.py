@@ -1,13 +1,12 @@
 import os
-import random
 
 from selene import browser, have, be, command, by
 
 
 class RegistrationPage:
 
-    def open_page(self, url):
-        browser.open(url)
+    def open_page(self):
+        browser.open('https://demoqa.com/automation-practice-form')
 
     def type_first_name(self, first_name):
         browser.element('#firstName').should(be.blank).type(first_name)
@@ -37,8 +36,7 @@ class RegistrationPage:
         browser.element('#subjectsInput').type(subject).press_enter()
 
     def select_sport_hobbie(self):
-        hobbies = ['Sports', 'Reading', 'Music']
-        browser.all('.custom-control-label').element_by(have.exact_text(random.choice(hobbies))).click()
+        browser.all('.custom-control-label').element_by(have.exact_text("Sports")).click()
 
     def upload_picture(self, path):
         browser.element('#uploadPicture').send_keys(os.path.abspath(path))

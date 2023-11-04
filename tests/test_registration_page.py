@@ -5,7 +5,7 @@ from qa_guru_hw_10.pages.registration_page import RegistrationPage
 def test_complete_form():
     registration_page = RegistrationPage()
 
-    registration_page.open_page('https://demoqa.com/automation-practice-form')
+    registration_page.open_page()
 
     registration_page.type_first_name('Sergey')
     registration_page.type_last_name('Bryazgin')
