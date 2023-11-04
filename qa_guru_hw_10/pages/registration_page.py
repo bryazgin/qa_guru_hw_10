@@ -1,5 +1,4 @@
 import os
-import random
 
 from selene import browser, have, be, command, by
 
@@ -37,8 +36,7 @@ class RegistrationPage:
         browser.element('#subjectsInput').type(subject).press_enter()
 
     def select_sport_hobbie(self):
-        hobbies = ['Sports', 'Reading', 'Music']
-        browser.all('.custom-control-label').element_by(have.exact_text(random.choice(hobbies))).click()
+        browser.all('.custom-control-label').element_by(have.exact_text('Sports')).click()
 
     def upload_picture(self, path):
         browser.element('#uploadPicture').send_keys(os.path.abspath(path))
@@ -55,8 +53,43 @@ class RegistrationPage:
     def submit(self):
         browser.element('#submit').click()
 
-    def modal_header(self):
-        return browser.element('.modal-header')
 
-    def modal_table(self):
-        return browser.element('.table-responsive').all('td:nth-of-type(2)')
+class HighLevelRegistrationPage:
+
+    def open_page(self):
+        browser.open('https://demoqa.com/automation-practice-form')
+
+    def register(self, user):
+        browser.element('#firstName').should(be.blank).type(user.first_name)
+        browser.element('#lastName').should(be.blank).type(user.last_name)
+        browser.element('#userEmail').should(be.blank).type(user.email)
+        browser.all('.custom-control').element_by(have.exact_text('Male')).click()
+        browser.element('#userNumber').should(be.blank).type(user.phone_number)
+
+        browser.element('#dateOfBirthInput').click()
+        browser.element('.react-datepicker__month-select').click().element(by.text('July')).click()
+        browser.element('.react-datepicker__year-select').click().element(by.text('1995')).click()
+        browser.element('.react-datepicker__day--010').click()
+
+        browser.element('#submit').perform(command.js.scroll_into_view)
+        browser.element('#subjectsInput').type(user.subject).press_enter()
+        browser.all('.custom-control-label').element_by(have.exact_text('Sports')).click()
+        browser.element('#uploadPicture').send_keys(os.path.abspath(user.path))
+        browser.element('#currentAddress').should(be.blank).type(f'{street}, dom {house}, kv. {flat}')
+        browser.element('#state').click().element(by.text('Haryana')).click()
+        browser.element('#city').click().element(by.text('Karnal')).click()
+        browser.element('#submit').click()
+
+    def should_have_registered(self, user):
+        browser.element('.table-responsive').all('td:nth-of-type(2)').should(have.texts(
+            f'{user.first_name} {user.last_name}',
+            user.email,
+            user.gender,
+            user.phone_number,
+            user.date_of_birth,
+            user.subject,
+            user.hobby,
+            user.photo,
+            user.current_address,
+            f'{user.state} {user.city}',
+        ))
