@@ -2,6 +2,8 @@ import os
 
 from selene import browser, have, be, command, by
 
+import tests
+
 
 class RegistrationPage:
 
@@ -39,7 +41,11 @@ class RegistrationPage:
         browser.all('.custom-control-label').element_by(have.exact_text("Sports")).click()
 
     def upload_picture(self, path):
-        browser.element('#uploadPicture').send_keys(os.path.abspath(path))
+        # исправил
+        #browser.element('#uploadPicture').send_keys(os.path.abspath(path))
+        browser.element('#uploadPicture').send_keys(
+            os.path.abspath(
+                os.path.join(os.path.dirname(tests.__file__), path)))
 
     def type_adress(self, street, house, flat):
         browser.element('#currentAddress').should(be.blank).type(f'{street}, dom {house}, kv. {flat}')
