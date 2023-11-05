@@ -2,6 +2,8 @@ import os
 
 from selene import browser, have, be, command, by
 
+import tests
+
 
 class HighLevelRegistrationPage:
 
@@ -23,7 +25,11 @@ class HighLevelRegistrationPage:
         browser.element('#submit').perform(command.js.scroll_into_view)
         browser.element('#subjectsInput').type(user.subject).press_enter()
         browser.all('.custom-control-label').element_by(have.exact_text(user.hobby)).click()
-        browser.element('#uploadPicture').send_keys(os.path.abspath('resources/image.png'))
+        # исправил
+        #browser.element('#uploadPicture').send_keys(os.path.abspath('resources/image.png'))
+        browser.element('#uploadPicture').send_keys(
+            os.path.abspath(
+                os.path.join(os.path.dirname(tests.__file__), f'resources/{user.photo}')))
         browser.element('#currentAddress').should(be.blank).type(
             f'{user.address_street}, dom {user.address_house}, kv. {user.address_flat}')
         browser.element('#state').click().element(by.text(user.state)).click()
