@@ -1,4 +1,5 @@
 from selene import have
+
 from qa_guru_hw_10.pages.registration_page import RegistrationPage
 
 
@@ -7,6 +8,7 @@ def test_complete_form():
 
     registration_page.open_page()
 
+    # WHEN
     registration_page.type_first_name('Sergey')
     registration_page.type_last_name('Bryazgin')
     registration_page.type_email('test_selene@gmail.com')
@@ -22,6 +24,7 @@ def test_complete_form():
     registration_page.select_karnal_city()
     registration_page.submit()
 
+    # THEN
     registration_page.modal_header().should(have.exact_text('Thanks for submitting the form'))
     registration_page.modal_table().should(have.texts(
         'Sergey Bryazgin',
