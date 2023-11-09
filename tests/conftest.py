@@ -9,4 +9,4 @@ def browser_config():
 
     yield
 
-    browser.quit()
+    browser.close()
