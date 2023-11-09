@@ -34,7 +34,7 @@ class HighLevelRegistrationPage:
             f'{user.address_street}, dom {user.address_house}, kv. {user.address_flat}')
         browser.element('#state').click().element(by.text(user.state)).click()
         browser.element('#city').click().element(by.text(user.city)).click()
-        browser.element('#submit').click()
+        browser.element('#submit').press_enter()
 
     def should_have_success_text(self):
         browser.element('.modal-header').should(have.exact_text('Thanks for submitting the form'))
