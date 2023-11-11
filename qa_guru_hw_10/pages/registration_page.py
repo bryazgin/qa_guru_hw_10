@@ -1,11 +1,8 @@
 import os
 
-from selene import have, be, command, by
+from selene import browser, have, be, command, by
 
 import tests
-from tests.conftest import setup_browser
-
-browser = setup_browser
 
 
 class HighLevelRegistrationPage:
