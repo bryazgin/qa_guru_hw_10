@@ -3,7 +3,6 @@ import os
 from selene import have, be, command, by, browser
 
 import tests
-from tests.conftest import setup_browser
 
 
 class RegistrationPage():
