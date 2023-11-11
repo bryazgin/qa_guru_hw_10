@@ -1,9 +1,16 @@
+import allure
+from allure_commons.types import Severity
+
 from qa_guru_hw_10.pages.registration_page import HighLevelRegistrationPage
 
 from qa_guru_hw_10.user.user import User
 
 
 def test_complete_form():
+    allure.dynamic.tag("Complete form")
+    allure.dynamic.severity(Severity.NORMAL)
+    allure.dynamic.story("Я как пользователь могу зарегистироваться на странице")
+    #allure.dynamic.link("https://github.com", name="Testing")
     registration_page = HighLevelRegistrationPage()
     Sergey = User(first_name='Sergey',
                   last_name='Bryazgin',
@@ -23,11 +30,14 @@ def test_complete_form():
                   city='Karnal'
                   )
 
-    registration_page.open_page()
+    with allure.step("Открываем страницу регистрации"):
+        registration_page.open_page()
 
     # WHEN
-    registration_page.register(Sergey)
+    with allure.step("Вводим данные пользователя"):
+        registration_page.register(Sergey)
 
     # THEN
-    registration_page.should_have_success_text()
-    registration_page.should_have_registered(Sergey)
+    with allure.step("Проверяем, что пользователь зарегистрирован"):
+        registration_page.should_have_success_text()
+        registration_page.should_have_registered(Sergey)
