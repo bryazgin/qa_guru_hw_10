@@ -6,7 +6,7 @@ from qa_guru_hw_10.pages.registration_page import HighLevelRegistrationPage
 from qa_guru_hw_10.user.user import User
 
 
-def test_complete_form():
+def test_complete_form(setup_browser):
     allure.dynamic.tag("Complete form")
     allure.dynamic.severity(Severity.NORMAL)
     allure.dynamic.story("Я как пользователь могу зарегистироваться на странице")

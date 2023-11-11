@@ -7,7 +7,7 @@ from selene import Browser, Config
 from utils import attach
 
 
-@pytest.fixture(scope='function', autouse=True)
+@pytest.fixture(scope='function')
 def setup_browser(request):
     # Browser.config.window_width = '1920'
     # Browser.config.window_height = '1080'
